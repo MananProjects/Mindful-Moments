@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mindful Moments - Products</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>🧘 Mindful Moments</h1>
+    <nav class="main-nav">
+      <div class="nav-left">
+        <a href="index.html">Home</a>
+        <a href="tips.html">Tips</a>
+        <a href="tracker.html">Tracker</a>
+        <a href="products.html">Products</a>
+      </div>
+      <div class="nav-right">
+        <a href="#cart-section" class="cart-btn">🛒 Cart</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2 style="text-align: center;">🛍️ Self-Care Essentials</h2>
+      <p style="text-align: center;">Discover calming tools to support your daily wellness.</p>
+
+      <div class="products-container">
+
+        <div class="product-card">
+          <h3>🍵 Chamomile Tea</h3>
+          <p>Reduces stress and helps you sleep peacefully.</p>
+          <p><strong>Price:</strong> Rs. 450</p>
+          <button onclick="addToCart('Chamomile Tea', 450)">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <h3>🕯️ Lavender Candle</h3>
+          <p>Creates a calm environment and eases anxiety.</p>
+          <p><strong>Price:</strong> Rs. 600</p>
+          <button onclick="addToCart('Lavender Candle', 600)">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <h3>📔 Gratitude Journal</h3>
+          <p>Improves mental clarity and emotional balance.</p>
+          <p><strong>Price:</strong> Rs. 350</p>
+          <button onclick="addToCart('Gratitude Journal', 350)">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <h3>🎧 Meditation App (Trial)</h3>
+          <p>Relax your mind with guided meditation sessions.</p>
+          <p><strong>Price:</strong> Rs. 0</p>
+          <button onclick="addToCart('Meditation App', 0)">Add to Cart</button>
+        </div>
+
+      </div>
+    </section>
+
+    <hr>
+
+    <section id="cart-section">
+      <h2 style="text-align: center;">🛒 Your Cart</h2>
+      <ul id="cart-list" style="max-width: 600px; margin: auto;"></ul>
+      <p style="text-align: center;"><strong>Total: Rs. <span id="total-price">0</span></strong></p>
+      <div style="text-align: center; margin-top: 10px;">
+        <button onclick="placeOrder()" class="cart-btn">Place Order</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mindful Moments. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ JavaScript for Cart and Checkout -->
+  <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(productName, price) {
+      cart.push({ name: productName, price: price });
+      total += price;
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartList = document.getElementById("cart-list");
+      cartList.innerHTML = "";
+      cart.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} - Rs. ${item.price}`;
+        cartList.appendChild(li);
+      });
+      document.getElementById("total-price").textContent = total;
+    }
+
+    function placeOrder() {
+      if (cart.length === 0) {
+        alert("Your cart is empty. Please add products before ordering.");
+        return;
+      }
+
+      let summary = "🧘 Order Summary:\n\n";
+      cart.forEach((item, i) => {
+        summary += `${i + 1}. ${item.name} — Rs. ${item.price}\n`;
+      });
+      summary += `\nTotal: Rs. ${total}\n\n`;
+
+      const confirmOrder = confirm(summary + "Do you want to place this order via WhatsApp?");
+
+      if (confirmOrder) {
+        const message = encodeURIComponent(summary + "Please confirm my order.");
+        const whatsappURL = `https://wa.me/923366546118?text=${message}`; // Replace with your number
+        window.open(whatsappURL, '_blank');
+
+        // Reset cart
+        cart = [];
+        total = 0;
+        updateCart();
+        alert("🎉 Thank you! Your order has been sent.");
+      }
+    }
+  </script>
+
+</body>
+</html>

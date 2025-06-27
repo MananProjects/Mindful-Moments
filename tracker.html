@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mindful Moments - Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>🧘 Mindful Moments</h1>
+    <nav class="main-nav">
+      <div class="nav-left">
+        <a href="index.html">Home</a>
+        <a href="tips.html">Tips</a>
+        <a href="tracker.html">Tracker</a>
+        <a href="products.html">Products</a>
+      </div>
+      <div class="nav-right">
+        <a href="products.html#cart-section" class="cart-btn">🛒 Cart</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-section">
+      <h2>📝 Daily Self-Care Tracker</h2>
+      <p style="text-align: center; color: #555;">Stay consistent with your wellness by checking off completed tasks.</p>
+
+      <div class="tracker-input">
+        <input type="text" id="task-input" placeholder="Enter a self-care task..." />
+        <button onclick="addTask()">Add</button>
+      </div>
+
+      <ul id="task-list">
+        <li><input type="checkbox" /> Drink 8 glasses of water <button class="delete-btn" onclick="removeTask(this)">🗑️</button></li>
+        <li><input type="checkbox" /> 10-minute meditation <button class="delete-btn" onclick="removeTask(this)">🗑️</button></li>
+        <li><input type="checkbox" /> Take a nature walk <button class="delete-btn" onclick="removeTask(this)">🗑️</button></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mindful Moments. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ JavaScript Logic -->
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById("task-input");
+      const taskText = taskInput.value.trim();
+
+      if (taskText !== "") {
+        const li = document.createElement("li");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+
+        const textNode = document.createTextNode(" " + taskText + " ");
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "🗑️";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.onclick = function () {
+          removeTask(deleteBtn);
+        };
+
+        li.appendChild(checkbox);
+        li.appendChild(textNode);
+        li.appendChild(deleteBtn);
+
+        document.getElementById("task-list").appendChild(li);
+        taskInput.value = "";
+      }
+    }
+
+    function removeTask(button) {
+      const li = button.parentElement;
+      li.remove();
+    }
+  </script>
+</body>
+</html>
